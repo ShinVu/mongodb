@@ -1,0 +1,79 @@
+{
+    "explainVersion": "1",
+    "queryPlanner": {
+        "namespace": "my_database.bigdata",
+        "indexFilterSet": false,
+        "parsedQuery": {
+            "account_no": {
+                "$eq": 58982
+            }
+        },
+        "queryHash": "BBFE1B6D",
+        "planCacheKey": "BBFE1B6D",
+        "maxIndexedOrSolutionsReached": false,
+        "maxIndexedAndSolutionsReached": false,
+        "maxScansToExplodeReached": false,
+        "winningPlan": {
+            "stage": "COLLSCAN",
+            "filter": {
+                "account_no": {
+                    "$eq": 58982
+                }
+            },
+            "direction": "forward"
+        },
+        "rejectedPlans": []
+    },
+    "executionStats": {
+        "executionSuccess": true,
+        "nReturned": 1,
+        "executionTimeMillis": 51,
+        "totalKeysExamined": 0,
+        "totalDocsExamined": 200000,
+        "executionStages": {
+            "stage": "COLLSCAN",
+            "filter": {
+                "account_no": {
+                    "$eq": 58982
+                }
+            },
+            "nReturned": 1,
+            "executionTimeMillisEstimate": 2,
+            "works": 200001,
+            "advanced": 1,
+            "needTime": 199999,
+            "needYield": 0,
+            "saveState": 200,
+            "restoreState": 200,
+            "isEOF": 1,
+            "direction": "forward",
+            "docsExamined": 200000
+        },
+        "allPlansExecution": []
+    },
+    "command": {
+        "find": "bigdata",
+        "filter": {
+            "account_no": 58982
+        },
+        "$db": "my_database"
+    },
+    "serverInfo": {
+        "host": "6b38dba125f5",
+        "port": 27017,
+        "version": "7.0.9",
+        "gitVersion": "3ff3a3925c36ed277cf5eafca5495f2e3728dd67"
+    },
+    "serverParameters": {
+        "internalQueryFacetBufferSizeBytes": 104857600,
+        "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+        "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+        "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+        "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+        "internalQueryProhibitBlockingMergeOnMongoS": 0,
+        "internalQueryMaxAddToSetBytes": 104857600,
+        "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+        "internalQueryFrameworkControl": "trySbeRestricted"
+    },
+    "ok": 1.0
+}

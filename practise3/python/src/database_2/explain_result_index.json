@@ -1,0 +1,123 @@
+{
+    "explainVersion": "1",
+    "queryPlanner": {
+        "namespace": "my_database.bigdata",
+        "indexFilterSet": false,
+        "parsedQuery": {
+            "account_no": {
+                "$eq": 58982
+            }
+        },
+        "queryHash": "BBFE1B6D",
+        "planCacheKey": "A3D9AB3F",
+        "maxIndexedOrSolutionsReached": false,
+        "maxIndexedAndSolutionsReached": false,
+        "maxScansToExplodeReached": false,
+        "winningPlan": {
+            "stage": "FETCH",
+            "inputStage": {
+                "stage": "IXSCAN",
+                "keyPattern": {
+                    "account_no": 1
+                },
+                "indexName": "account_no_1",
+                "isMultiKey": false,
+                "multiKeyPaths": {
+                    "account_no": []
+                },
+                "isUnique": false,
+                "isSparse": false,
+                "isPartial": false,
+                "indexVersion": 2,
+                "direction": "forward",
+                "indexBounds": {
+                    "account_no": [
+                        "[58982, 58982]"
+                    ]
+                }
+            }
+        },
+        "rejectedPlans": []
+    },
+    "executionStats": {
+        "executionSuccess": true,
+        "nReturned": 1,
+        "executionTimeMillis": 1,
+        "totalKeysExamined": 1,
+        "totalDocsExamined": 1,
+        "executionStages": {
+            "stage": "FETCH",
+            "nReturned": 1,
+            "executionTimeMillisEstimate": 1,
+            "works": 2,
+            "advanced": 1,
+            "needTime": 0,
+            "needYield": 0,
+            "saveState": 0,
+            "restoreState": 0,
+            "isEOF": 1,
+            "docsExamined": 1,
+            "alreadyHasObj": 0,
+            "inputStage": {
+                "stage": "IXSCAN",
+                "nReturned": 1,
+                "executionTimeMillisEstimate": 1,
+                "works": 2,
+                "advanced": 1,
+                "needTime": 0,
+                "needYield": 0,
+                "saveState": 0,
+                "restoreState": 0,
+                "isEOF": 1,
+                "keyPattern": {
+                    "account_no": 1
+                },
+                "indexName": "account_no_1",
+                "isMultiKey": false,
+                "multiKeyPaths": {
+                    "account_no": []
+                },
+                "isUnique": false,
+                "isSparse": false,
+                "isPartial": false,
+                "indexVersion": 2,
+                "direction": "forward",
+                "indexBounds": {
+                    "account_no": [
+                        "[58982, 58982]"
+                    ]
+                },
+                "keysExamined": 1,
+                "seeks": 1,
+                "dupsTested": 0,
+                "dupsDropped": 0
+            }
+        },
+        "allPlansExecution": []
+    },
+    "command": {
+        "find": "bigdata",
+        "filter": {
+            "account_no": 58982
+        },
+        "$db": "my_database"
+    },
+    "serverInfo": {
+        "host": "6b38dba125f5",
+        "port": 27017,
+        "version": "7.0.9",
+        "gitVersion": "3ff3a3925c36ed277cf5eafca5495f2e3728dd67"
+    },
+    "serverParameters": {
+        "internalQueryFacetBufferSizeBytes": 104857600,
+        "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+        "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+        "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+        "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+        "internalQueryProhibitBlockingMergeOnMongoS": 0,
+        "internalQueryMaxAddToSetBytes": 104857600,
+        "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+        "internalQueryFrameworkControl": "trySbeRestricted"
+    },
+    "ok": 1.0
+}
