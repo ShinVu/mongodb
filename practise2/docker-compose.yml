@@ -1,0 +1,134 @@
+services:
+  mongodb:
+    container_name: mongodb
+    build: 
+      context: ./mongodb
+      dockerfile: Dockerfile
+    env_file:
+      - path: ./env/mongodb/.env.development
+        required: true 
+    networks:
+      - mongodb-tier
+    volumes:
+      - mongodb_data:/bitnami/
+
+  mongodb-secondary:
+    image: docker.io/bitnami/mongodb:7.0
+    depends_on:
+      - mongodb
+    env_file:
+      - path: ./env/mongodb-secondary/.env.development 
+        required: true
+    networks:
+      - mongodb-tier
+    volumes:
+      - mongodb_secondary_data:/bitnami/
+
+  mongodb-arbiter:
+    image: docker.io/bitnami/mongodb:7.0
+    depends_on:
+      - mongodb
+    env_file:
+      - path: ./env/mongodb-arbiter/.env.development 
+        required: true 
+    networks: 
+      - mongodb-tier 
+    volumes:
+      - mongodb_arbiter_data:/bitnami/
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    depends_on:
+      - mongodb
+    ports:
+      - "8081:8081"
+    networks:
+      - mongodb-tier
+    env_file:
+      - path: ./env/mongo-express/.env.development
+        required: true 
+
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - prometheous-tier
+      - grafana-tier
+    env_file:
+      - path: ./env/prometheus/.env.development
+        required: true 
+    volumes:
+      - prometheus_data:/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider localhost:9090 || exit 1
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  mongodb-exporter:
+    container_name: mongodb-exporter
+    build:
+      context: ./mongodb-exporter
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+    ports:
+      - '9216:9216'
+    networks:
+      - mongodb-tier
+      - prometheous-tier
+    env_file:
+      - path: ./env/mongodb-exporter/.env.development
+        required: true
+    command:
+      - --collect-all
+  
+
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    env_file:
+      - path: ./env/grafana/.env.development
+        required: true 
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - grafana_data:/var/lib/grafana
+    networks:
+      - grafana-tier
+    healthcheck:
+      test: curl --fail localhost:3000
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  mongodb_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  mongodb_secondary_data:
+    driver: local
+  mongodb_arbiter_data:
+    driver: local
+
+networks:
+  mongodb-tier:
+    driver: bridge
+  prometheous-tier:
+    driver: bridge
+  grafana-tier:
+    driver: bridge
+
